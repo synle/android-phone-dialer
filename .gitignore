@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+.pnp.*
+
+# React Native
+.metro-health-check*
+
+# Android
+android/app/build/
+android/build/
+android/.gradle/
+android/app/debug.keystore
+android/local.properties
+*.apk
+*.aab
+*.hprof
+
+# iOS (not used but in case)
+ios/Pods/
+ios/build/
+
+# JS bundle
+*.jsbundle
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+
+# Build
+build/
+dist/
+
+# Patch artifacts
+*.patch
