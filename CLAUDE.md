@@ -36,3 +36,18 @@ Production-architected Android phone dialer built with React Native 0.73.4 + Kot
 - Foreground service type required: DialerInCallService uses FOREGROUND_SERVICE_TYPE_PHONE_CALL
 - All manifest components have explicit android:exported
 - AndroidX 1.13+ required for insets APIs
+
+## CI
+
+`.github/workflows/build.yml` runs on push to `main`/`master`, PRs, and `workflow_dispatch`. Sets up Node 20 + JDK 17 + Gradle 8.6, runs `npm install --legacy-peer-deps`, generates `android/app/debug.keystore` on the fly, then `gradle assembleDebug` from `android/`. Uploads `phone-dialer-debug-apk`.
+
+See `dev.md` for sideload + default-dialer-role instructions.
+
+## Version Pins / Build Quirks
+
+- `react-native-screens: 3.34.0` — pinned. 3.36+ uses `BaseReactPackage` from RN 0.74's API and won't compile against RN 0.73.
+- `react-native-reanimated: 3.16.7` — pinned. Newer requires RN 0.78+.
+- `react-native-safe-area-context: 4.10.5` — pinned for the same RN compat reason.
+- `org.gradle.configuration-cache=false` in `android/gradle.properties` — RN 0.73's `native_modules.gradle` spawns Node at configuration time, which is incompatible with the configuration cache.
+- RN gradle plugin is loaded via `classpath("com.facebook.react:react-native-gradle-plugin")` in `android/build.gradle` + top-level `includeBuild('../node_modules/@react-native/gradle-plugin')` in `android/settings.gradle`.
+- `MainApplication.kt` must `import com.facebook.react.PackageList` — autolinking generates the class at build time; without the import, kotlinc can't resolve it.
