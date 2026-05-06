@@ -38,8 +38,10 @@ describe('formatPhoneNumber — edge cases', () => {
     expect(formatPhoneNumber('---')).toBe('');
   });
 
-  it('strips letters but keeps digits', () => {
-    expect(formatPhoneNumber('1-800-FLOWERS')).toBe('+1 (800)');
+  it('strips letters but keeps digits (mixed input)', () => {
+    // After stripping letters: "1800" → US-with-country-code branch, "800" formatted.
+    // At 3 digits the formatter intentionally omits the closing paren (still typing).
+    expect(formatPhoneNumber('1-800-FLOWERS')).toBe('+1 (800');
   });
 });
 
