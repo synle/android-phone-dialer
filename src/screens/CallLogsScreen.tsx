@@ -43,35 +43,29 @@ export function CallLogsScreen() {
   const handleEntryPress = useCallback((entry: CallLogEntry) => {
     if (!entry.number) return;
 
-    Alert.alert(
-      `Call ${entry.name || entry.number}?`,
-      entry.number,
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Call',
-          onPress: async () => {
-            try {
-              await NativeTelecom.placeCall(entry.number);
-            } catch (error: any) {
-              Alert.alert('Call Failed', error?.message || 'Unable to place call.');
-            }
-          },
+    Alert.alert(`Call ${entry.name || entry.number}?`, entry.number, [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Call',
+        onPress: async () => {
+          try {
+            await NativeTelecom.placeCall(entry.number);
+          } catch (error: any) {
+            Alert.alert('Call Failed', error?.message || 'Unable to place call.');
+          }
         },
-        {
-          text: 'Copy to Dial Pad',
-          onPress: () => {
-            useDialPadStore.getState().setDigits(entry.number.replace(/\D/g, ''));
-          },
+      },
+      {
+        text: 'Copy to Dial Pad',
+        onPress: () => {
+          useDialPadStore.getState().setDigits(entry.number.replace(/\D/g, ''));
         },
-      ],
-    );
+      },
+    ]);
   }, []);
 
   const renderItem = useCallback(
-    ({ item }: { item: CallLogEntry }) => (
-      <CallLogItem entry={item} onPress={handleEntryPress} />
-    ),
+    ({ item }: { item: CallLogEntry }) => <CallLogItem entry={item} onPress={handleEntryPress} />,
     [handleEntryPress],
   );
 
@@ -101,7 +95,8 @@ export function CallLogsScreen() {
         title="Call Log Access"
         message="This app needs access to your call history to display it here."
         isGranted={permissions.READ_CALL_LOG}
-        onRequestPermission={requestAll}>
+        onRequestPermission={requestAll}
+      >
         {/* Filter Chips */}
         <View style={styles.filterRow}>
           {FILTERS.map((f) => (
@@ -109,12 +104,11 @@ export function CallLogsScreen() {
               key={f.value}
               style={[styles.filterChip, filter === f.value && styles.filterChipActive]}
               onPress={() => setFilter(f.value)}
-              android_ripple={{ color: Colors.surfaceVariant }}>
+              android_ripple={{ color: Colors.surfaceVariant }}
+            >
               <Text
-                style={[
-                  styles.filterChipText,
-                  filter === f.value && styles.filterChipTextActive,
-                ]}>
+                style={[styles.filterChipText, filter === f.value && styles.filterChipTextActive]}
+              >
                 {f.label}
               </Text>
             </Pressable>

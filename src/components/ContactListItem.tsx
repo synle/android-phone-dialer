@@ -28,7 +28,8 @@ export const ContactListItem = React.memo(function ContactListItem({
     <Pressable
       style={styles.container}
       onPress={handlePress}
-      android_ripple={{ color: Colors.surfaceVariant }}>
+      android_ripple={{ color: Colors.surfaceVariant }}
+    >
       <View style={styles.avatar}>
         {contact.photoUri ? (
           <Image source={{ uri: contact.photoUri }} style={styles.avatarImage} />

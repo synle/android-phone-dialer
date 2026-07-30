@@ -49,10 +49,7 @@ function getCallTypeColor(type: CallType): string {
  * Displays call type icon, contact name/number, time, and duration.
  * Tap to redial.
  */
-export const CallLogItem = React.memo(function CallLogItem({
-  entry,
-  onPress,
-}: CallLogItemProps) {
+export const CallLogItem = React.memo(function CallLogItem({ entry, onPress }: CallLogItemProps) {
   const handlePress = useCallback(() => {
     onPress(entry);
   }, [entry, onPress]);
@@ -65,17 +62,13 @@ export const CallLogItem = React.memo(function CallLogItem({
     <Pressable
       style={styles.container}
       onPress={handlePress}
-      android_ripple={{ color: Colors.surfaceVariant }}>
+      android_ripple={{ color: Colors.surfaceVariant }}
+    >
       <View style={styles.iconContainer}>
         <Text style={[styles.icon, { color: typeColor }]}>{typeIcon}</Text>
       </View>
       <View style={styles.info}>
-        <Text
-          style={[
-            styles.name,
-            entry.type === 'MISSED' && styles.missedName,
-          ]}
-          numberOfLines={1}>
+        <Text style={[styles.name, entry.type === 'MISSED' && styles.missedName]} numberOfLines={1}>
           {displayName}
         </Text>
         <Text style={styles.details}>

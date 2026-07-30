@@ -78,19 +78,7 @@ export interface PermissionResult {
 // Dialer
 // ============================================================
 
-export type DialPadKey =
-  | '0'
-  | '1'
-  | '2'
-  | '3'
-  | '4'
-  | '5'
-  | '6'
-  | '7'
-  | '8'
-  | '9'
-  | '*'
-  | '#';
+export type DialPadKey = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '*' | '#';
 
 export const DIAL_PAD_LETTERS: Record<DialPadKey, string> = {
   '0': '+',

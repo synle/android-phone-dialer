@@ -16,9 +16,9 @@ const Tab = createBottomTabNavigator<RootTabParamList>();
 
 function TabIcon({ label, focused }: { label: string; focused: boolean }) {
   const icons: Record<string, string> = {
-    'Dial Pad': '\u260E',  // ☎
+    'Dial Pad': '\u260E', // ☎
     Contacts: '\u{1F464}', // 👤
-    Recents: '\u{1F4CB}',  // 📋
+    Recents: '\u{1F4CB}', // 📋
   };
 
   return (
@@ -35,9 +35,7 @@ function DefaultDialerBanner() {
 
   return (
     <Pressable style={styles.banner} onPress={requestRole}>
-      <Text style={styles.bannerText}>
-        Tap to set as default dialer for full functionality
-      </Text>
+      <Text style={styles.bannerText}>Tap to set as default dialer for full functionality</Text>
     </Pressable>
   );
 }
@@ -70,10 +68,14 @@ export default function App() {
               tabBarStyle: styles.tabBar,
               tabBarLabelStyle: styles.tabBarLabel,
               tabBarIcon: ({ focused }) => (
-                <TabIcon label={route.name === 'CallLogs' ? 'Recents' : route.name} focused={focused} />
+                <TabIcon
+                  label={route.name === 'CallLogs' ? 'Recents' : route.name}
+                  focused={focused}
+                />
               ),
             })}
-            initialRouteName="DialPad">
+            initialRouteName="DialPad"
+          >
             <Tab.Screen
               name="DialPad"
               component={DialPadScreen}

@@ -4,15 +4,15 @@ Production-architected Android phone dialer. React Native UI + Kotlin native mod
 
 ## Toolchain
 
-| Tool | Version |
-|------|---------|
-| Node.js | 20.x |
-| JDK | 17 (Temurin recommended) |
-| Gradle | 8.6 (CI auto-installs) |
-| AGP | 8.4.0 |
-| Kotlin | 1.9.24 |
-| Compile / Target SDK | 35 (Android 15) |
-| Min SDK | 26 |
+| Tool                 | Version                  |
+| -------------------- | ------------------------ |
+| Node.js              | 20.x                     |
+| JDK                  | 17 (Temurin recommended) |
+| Gradle               | 8.6 (CI auto-installs)   |
+| AGP                  | 8.4.0                    |
+| Kotlin               | 1.9.24                   |
+| Compile / Target SDK | 35 (Android 15)          |
+| Min SDK              | 26                       |
 
 ## Local build
 

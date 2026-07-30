@@ -1,17 +1,7 @@
 import React, { useCallback, useRef } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-  Alert,
-} from 'react-native';
+import { StyleSheet, Text, View, Pressable, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { DialPadGrid } from '../components/DialPadGrid';
 import { useDialPadStore } from '../core/store';
 import { Colors, Typography, Spacing, BorderRadius } from '../core/theme';
@@ -72,10 +62,7 @@ export function DialPadScreen() {
     if (!hasPermission) {
       const granted = await requestPermission('CALL_PHONE');
       if (!granted) {
-        Alert.alert(
-          'Permission Required',
-          'CALL_PHONE permission is needed to place calls.',
-        );
+        Alert.alert('Permission Required', 'CALL_PHONE permission is needed to place calls.');
         return;
       }
     }
@@ -103,12 +90,10 @@ export function DialPadScreen() {
       {/* Number Display */}
       <View style={styles.displayContainer}>
         <Text
-          style={[
-            styles.displayText,
-            digits.length > 12 && styles.displayTextSmall,
-          ]}
+          style={[styles.displayText, digits.length > 12 && styles.displayTextSmall]}
           numberOfLines={1}
-          adjustsFontSizeToFit>
+          adjustsFontSizeToFit
+        >
           {formattedNumber || '\u00A0'}
         </Text>
       </View>
@@ -132,7 +117,8 @@ export function DialPadScreen() {
             callButtonScale.value = withTiming(1, { duration: 120 });
           }}
           disabled={digits.length === 0}
-          android_ripple={{ color: '#2E7D32', borderless: true, radius: 32 }}>
+          android_ripple={{ color: '#2E7D32', borderless: true, radius: 32 }}
+        >
           <Text style={styles.callIcon}>{'\u260E'}</Text>
         </AnimatedPressable>
 
@@ -144,7 +130,8 @@ export function DialPadScreen() {
               onPress={handleBackspace}
               onLongPress={handleBackspaceLongPress}
               delayLongPress={600}
-              android_ripple={{ color: Colors.surfaceVariant, borderless: true, radius: 24 }}>
+              android_ripple={{ color: Colors.surfaceVariant, borderless: true, radius: 24 }}
+            >
               <Text style={styles.backspaceIcon}>{'\u232B'}</Text>
             </Pressable>
           ) : null}

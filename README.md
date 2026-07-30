@@ -4,15 +4,15 @@ Production-architected Android phone dialer. React Native 0.73 UI + Kotlin nativ
 Targets **Android 15 (API 35)** on **Samsung Galaxy S24 Ultra (One UI 7)**.
 Developed on **Windows 11**.
 
-| | Version |
-|---|---|
-| compileSdk / targetSdk | 35 (Android 15) |
-| minSdk | 26 (Android 8.0) |
-| React Native | 0.73.4 |
-| Kotlin | 1.9.24 |
-| Gradle | 8.6 / AGP 8.4.0 |
-| JDK | 17 |
-| Node.js | 20 LTS |
+|                        | Version          |
+| ---------------------- | ---------------- |
+| compileSdk / targetSdk | 35 (Android 15)  |
+| minSdk                 | 26 (Android 8.0) |
+| React Native           | 0.73.4           |
+| Kotlin                 | 1.9.24           |
+| Gradle                 | 8.6 / AGP 8.4.0  |
+| JDK                    | 17               |
+| Node.js                | 20 LTS           |
 
 ---
 
@@ -392,6 +392,7 @@ NativeInCall.ts           ◄──────► InCallModule.kt         ─�
 ```
 
 **Every bridge module follows the same pattern:**
+
 1. TS wrapper validates module exists, provides TypeScript interface
 2. Kotlin module is thin — marshals data between RN types and Kotlin types
 3. Business logic lives in the repository/manager classes
@@ -508,10 +509,12 @@ If you have multiple JDKs, JAVA_HOME might point to the wrong one and Gradle wil
 Android Studio > gear icon > Settings > **Languages & Frameworks > Android SDK**
 
 **SDK Platforms** (check "Show Package Details"):
+
 - Android 15.0 (API 35): `Android SDK Platform 35`, a system image for emulator
 - Android 14.0 (API 34): `Android SDK Platform 34` (fallback)
 
 **SDK Tools:**
+
 - Android SDK Build-Tools 35.0.0
 - Android SDK Command-line Tools (latest)
 - Android Emulator
@@ -533,10 +536,10 @@ Press **Win + R** → `sysdm.cpl` → **Advanced** → **Environment Variables**
 
 **User variables** — create:
 
-| Variable | Value |
-|---|---|
+| Variable       | Value                                      |
+| -------------- | ------------------------------------------ |
 | `ANDROID_HOME` | `C:\Users\<YOU>\AppData\Local\Android\Sdk` |
-| `JAVA_HOME` | `C:\Program Files\Zulu\zulu-17` |
+| `JAVA_HOME`    | `C:\Program Files\Zulu\zulu-17`            |
 
 **Path** — add these entries in this order:
 
@@ -559,24 +562,29 @@ java -version             # openjdk version "17.x.x"
 ### 7.7 Windows-Specific Configuration
 
 **Enable long paths** (PowerShell as Admin):
+
 ```powershell
 New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
 ```
+
 Restart after.
 
 **PowerShell execution policy** (PowerShell as Admin):
+
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
 **Windows Defender exclusions** (without these, builds take 3-5x longer):
 Windows Security > Virus & threat protection > Manage settings > Exclusions > Add:
+
 - Your project folder
 - `%ANDROID_HOME%`
 - `%USERPROFILE%\.gradle`
 - `%USERPROFILE%\AppData\Local\Temp`
 
 **Install Watchman** (better file watching):
+
 ```powershell
 choco install watchman
 ```
@@ -604,6 +612,7 @@ Use a SHORT path like `C:\Dev\PhoneDialer`. Deep paths cause Gradle failures on 
 ### 8.2 Overlay source files
 
 Copy everything from this repo into the generated project:
+
 - All root config files (`package.json`, `tsconfig.json`, `babel.config.js`, `metro.config.js`, `index.js`, `app.json`)
 - Entire `src\` directory
 - All `android\` config files (`build.gradle`, `settings.gradle`, `gradle.properties`, `gradle\wrapper\gradle-wrapper.properties`)
@@ -634,11 +643,13 @@ Open `android\` in Android Studio. Wait for sync. If it fails: verify JAVA_HOME,
 ## 9. Running on Emulator
 
 Terminal 1:
+
 ```powershell
 npx react-native start
 ```
 
 Terminal 2:
+
 ```powershell
 npx react-native run-android
 ```
@@ -660,6 +671,7 @@ Settings > Developer options > **USB debugging** ON. Also enable **Stay awake**.
 ### 10.3 Connect via USB
 
 Use the cable that came with the S24 Ultra (data cable). Plug in. On the phone:
+
 1. Notification: "USB connected" → tap → change to **File transfer**
 2. Dialog: "Allow USB debugging?" → check **Always allow** → Allow
 
@@ -687,6 +699,7 @@ npx react-native run-android              # terminal 2
 ```
 
 Target specific device if emulator is also running:
+
 ```powershell
 npx react-native run-android --deviceId=RFXXXXXXXX
 ```
@@ -699,23 +712,28 @@ If missed: Settings > Apps > Phone Dialer > Permissions.
 ### 10.7 Debugging
 
 **JS debugging (Chrome DevTools):**
+
 ```powershell
 adb shell input keyevent 82              # opens RN dev menu on phone
 ```
+
 Tap "Open Debugger" → Chrome opens → F12 for DevTools.
 
 **Kotlin debugging (Android Studio):**
+
 1. Open `android\` in Android Studio
 2. Select S24 Ultra from device dropdown
 3. Set breakpoints in Kotlin files
 4. Click Debug (bug icon) — attaches to running app
 
 **Logcat:**
+
 ```powershell
 adb logcat --pid=$(adb shell pidof com.phonedialer)
 ```
 
 Filter by tag:
+
 ```powershell
 adb logcat -s DialerInCallService:V OutgoingCallManager:V ContactsModule:V
 ```
@@ -725,13 +743,16 @@ adb logcat -s DialerInCallService:V OutgoingCallManager:V ContactsModule:V
 ### 10.8 Wireless debugging (no cable)
 
 With USB connected first:
+
 1. Phone: Settings > Developer options > Wireless debugging > ON
 2. Tap Wireless debugging > Pair device with pairing code
 3. In PowerShell:
+
 ```powershell
 adb pair <IP>:<PAIRING_PORT>           # enter 6-digit code
 adb connect <IP>:<WIRELESS_DEBUG_PORT>  # different port than pairing
 ```
+
 4. Unplug USB. `adb devices` still shows phone.
 
 ### 10.9 Release APK
@@ -749,16 +770,16 @@ Windows: always `.\gradlew.bat`, never `./gradlew`.
 
 ## 11. Samsung Galaxy S24 Ultra / One UI 7 Notes
 
-| Topic | Detail |
-|---|---|
-| Default dialer switch | One UI may show extra confirmation dialogs beyond stock Android |
-| Edge panels | Edge swipe gestures may overlap with app UI. `singleTask` launch mode mitigates. |
-| Samsung DeX | App runs in resizable window on external monitor. Layout will work but not optimized. |
-| Notifications | `NotificationCompat` delegates styling to One UI — looks correct automatically |
-| Call & Text on Other Devices | Can conflict with InCallService. Disable during development: Settings > Connected devices |
-| Secure Folder | Contacts inside Secure Folder are invisible to third-party apps (by design) |
-| Battery optimization | One UI kills background services aggressively. Set to Unrestricted: Settings > Apps > Phone Dialer > Battery |
-| Display cutout | `windowLayoutInDisplayCutoutMode=shortEdges` handles the punch-hole camera |
+| Topic                        | Detail                                                                                                       |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Default dialer switch        | One UI may show extra confirmation dialogs beyond stock Android                                              |
+| Edge panels                  | Edge swipe gestures may overlap with app UI. `singleTask` launch mode mitigates.                             |
+| Samsung DeX                  | App runs in resizable window on external monitor. Layout will work but not optimized.                        |
+| Notifications                | `NotificationCompat` delegates styling to One UI — looks correct automatically                               |
+| Call & Text on Other Devices | Can conflict with InCallService. Disable during development: Settings > Connected devices                    |
+| Secure Folder                | Contacts inside Secure Folder are invisible to third-party apps (by design)                                  |
+| Battery optimization         | One UI kills background services aggressively. Set to Unrestricted: Settings > Apps > Phone Dialer > Battery |
+| Display cutout               | `windowLayoutInDisplayCutoutMode=shortEdges` handles the punch-hole camera                                   |
 
 ---
 
@@ -769,11 +790,13 @@ Windows: always `.\gradlew.bat`, never `./gradlew`.
 **Settings:** Settings > Apps > Default apps > Phone app > select "Phone"
 
 **ADB:**
+
 ```powershell
 adb shell cmd role remove-role-holder android.app.role.DIALER com.phonedialer
 ```
 
 **Uninstall:**
+
 ```powershell
 adb uninstall com.phonedialer
 ```
@@ -795,29 +818,29 @@ adb uninstall com.phonedialer
 
 ## 13. Troubleshooting — Windows
 
-| Problem | Fix |
-|---|---|
-| `'adb' is not recognized` | ANDROID_HOME or Path wrong. Verify: `Test-Path "$env:ANDROID_HOME\platform-tools\adb.exe"` |
-| Wrong JDK (build fails with "unsupported class file version") | `java -version` must show 17. Fix JAVA_HOME. Restart all terminals. |
-| `AAPT2` / path too long | Move project to `C:\Dev\PhoneDialer`. |
-| `EPERM: operation not permitted` | Windows Defender locking files. Add exclusions (7.7). |
-| Build takes 20+ minutes | Add Defender exclusions. Already set `Xmx4096m` in gradle.properties. |
-| `Unable to load script` / white screen | `adb reverse tcp:8081 tcp:8081`. Ensure Metro is running. |
-| `adb devices` → `offline` | Unplug/replug. Developer options > Revoke USB debugging authorizations > replug > Allow. |
-| Emulator won't start (HAXM error) | Disable Hyper-V, or enable Windows Hypervisor Platform for AMD. |
-| `INSTALL_FAILED_UPDATE_INCOMPATIBLE` | `adb uninstall com.phonedialer` then rebuild. |
-| `.\gradlew` fails | Use `.\gradlew.bat` on Windows. |
+| Problem                                                       | Fix                                                                                        |
+| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `'adb' is not recognized`                                     | ANDROID_HOME or Path wrong. Verify: `Test-Path "$env:ANDROID_HOME\platform-tools\adb.exe"` |
+| Wrong JDK (build fails with "unsupported class file version") | `java -version` must show 17. Fix JAVA_HOME. Restart all terminals.                        |
+| `AAPT2` / path too long                                       | Move project to `C:\Dev\PhoneDialer`.                                                      |
+| `EPERM: operation not permitted`                              | Windows Defender locking files. Add exclusions (7.7).                                      |
+| Build takes 20+ minutes                                       | Add Defender exclusions. Already set `Xmx4096m` in gradle.properties.                      |
+| `Unable to load script` / white screen                        | `adb reverse tcp:8081 tcp:8081`. Ensure Metro is running.                                  |
+| `adb devices` → `offline`                                     | Unplug/replug. Developer options > Revoke USB debugging authorizations > replug > Allow.   |
+| Emulator won't start (HAXM error)                             | Disable Hyper-V, or enable Windows Hypervisor Platform for AMD.                            |
+| `INSTALL_FAILED_UPDATE_INCOMPATIBLE`                          | `adb uninstall com.phonedialer` then rebuild.                                              |
+| `.\gradlew` fails                                             | Use `.\gradlew.bat` on Windows.                                                            |
 
 ---
 
 ## 14. Troubleshooting — General
 
-| Problem | Fix |
-|---|---|
-| RoleManager not working | Requires API 29+. S24 Ultra on API 35 is fine. Old emulators use fallback. |
-| CALL_PHONE not triggering | Check permissions. Check logcat. Number must be 3-15 digits. |
-| Contacts empty | Permission granted? Contacts exist on device? Secure Folder contacts are hidden. |
-| Metro issues | `npx react-native start --reset-cache`. Port conflict: `--port 8082` + `adb reverse tcp:8082 tcp:8082`. |
+| Problem                   | Fix                                                                                                     |
+| ------------------------- | ------------------------------------------------------------------------------------------------------- |
+| RoleManager not working   | Requires API 29+. S24 Ultra on API 35 is fine. Old emulators use fallback.                              |
+| CALL_PHONE not triggering | Check permissions. Check logcat. Number must be 3-15 digits.                                            |
+| Contacts empty            | Permission granted? Contacts exist on device? Secure Folder contacts are hidden.                        |
+| Metro issues              | `npx react-native start --reset-cache`. Port conflict: `--port 8082` + `adb reverse tcp:8082 tcp:8082`. |
 
 ---
 
@@ -861,12 +884,12 @@ VoIP                 SIP/oRTP integration in ConnectionService    telecom/
 
 ### Native vs. React Native
 
-| | React Native | Kotlin Native |
-|---|---|---|
-| InCallService | Fragile | First-class |
-| Background calls | Headless JS or Kotlin fallback | Native services |
-| Emergency reliability | JS-dependent | OS-level |
-| System integration | Bridge overhead | Direct API |
+|                       | React Native                   | Kotlin Native   |
+| --------------------- | ------------------------------ | --------------- |
+| InCallService         | Fragile                        | First-class     |
+| Background calls      | Headless JS or Kotlin fallback | Native services |
+| Emergency reliability | JS-dependent                   | OS-level        |
+| System integration    | Bridge overhead                | Direct API      |
 
 ### What Google/Samsung Dialer Has That You Don't
 

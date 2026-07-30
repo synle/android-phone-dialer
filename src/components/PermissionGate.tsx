@@ -32,7 +32,8 @@ export function PermissionGate({
       <Pressable
         style={styles.button}
         onPress={onRequestPermission}
-        android_ripple={{ color: Colors.primaryDark }}>
+        android_ripple={{ color: Colors.primaryDark }}
+      >
         <Text style={styles.buttonText}>Grant Permission</Text>
       </Pressable>
     </View>

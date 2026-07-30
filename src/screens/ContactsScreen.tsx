@@ -1,12 +1,5 @@
 import React, { useCallback } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  SectionList,
-  ActivityIndicator,
-  Alert,
-} from 'react-native';
+import { StyleSheet, Text, View, SectionList, ActivityIndicator, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useContacts } from '../hooks/useContacts';
 import { usePermissions } from '../hooks/usePermissions';
@@ -35,23 +28,19 @@ export function ContactsScreen() {
       return;
     }
 
-    Alert.alert(
-      `Call ${contact.displayName}?`,
-      contact.phoneNumber,
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Call',
-          onPress: async () => {
-            try {
-              await NativeTelecom.placeCall(contact.phoneNumber!);
-            } catch (error: any) {
-              Alert.alert('Call Failed', error?.message || 'Unable to place call.');
-            }
-          },
+    Alert.alert(`Call ${contact.displayName}?`, contact.phoneNumber, [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Call',
+        onPress: async () => {
+          try {
+            await NativeTelecom.placeCall(contact.phoneNumber!);
+          } catch (error: any) {
+            Alert.alert('Call Failed', error?.message || 'Unable to place call.');
+          }
         },
-      ],
-    );
+      },
+    ]);
   }, []);
 
   const renderSectionHeader = useCallback(
@@ -98,7 +87,8 @@ export function ContactsScreen() {
         title="Contacts Access"
         message="This app needs access to your contacts to display them here."
         isGranted={permissions.READ_CONTACTS}
-        onRequestPermission={requestAll}>
+        onRequestPermission={requestAll}
+      >
         <SearchBar value={searchQuery} onChangeText={search} placeholder="Search contacts..." />
         <SectionList
           sections={sections}

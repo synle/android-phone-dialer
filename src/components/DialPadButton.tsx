@@ -1,16 +1,6 @@
 import React, { useCallback } from 'react';
-import {
-  StyleSheet,
-  Text,
-  Pressable,
-  View,
-  type GestureResponderEvent,
-} from 'react-native';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-} from 'react-native-reanimated';
+import { StyleSheet, Text, Pressable, View, type GestureResponderEvent } from 'react-native';
+import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { Colors, Typography, Spacing } from '../core/theme';
 import { DIAL_PAD_LETTERS, type DialPadKey } from '../core/types';
 
@@ -64,7 +54,8 @@ export const DialPadButton = React.memo(function DialPadButton({
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
       android_ripple={{ color: Colors.surfaceVariant, borderless: true, radius: 36 }}
-      delayLongPress={500}>
+      delayLongPress={500}
+    >
       <View style={styles.content}>
         <Text style={styles.digit}>{digit}</Text>
         {letters ? <Text style={styles.letters}>{letters}</Text> : null}

@@ -115,8 +115,7 @@ export const useCallLogStore = create<CallLogState>((set) => ({
   isLoading: false,
   hasMore: true,
   setEntries: (entries) => set({ entries }),
-  appendEntries: (newEntries) =>
-    set((state) => ({ entries: [...state.entries, ...newEntries] })),
+  appendEntries: (newEntries) => set((state) => ({ entries: [...state.entries, ...newEntries] })),
   setLoading: (isLoading) => set({ isLoading }),
   setHasMore: (hasMore) => set({ hasMore }),
   reset: () => set({ entries: [], hasMore: true }),
@@ -143,8 +142,7 @@ export const useActiveCallStore = create<ActiveCallState>((set) => ({
   isMuted: false,
   isSpeaker: false,
   setCallState: (phoneNumber, callState) => set({ phoneNumber, callState }),
-  clearCall: () =>
-    set({ phoneNumber: null, callState: null, isMuted: false, isSpeaker: false }),
+  clearCall: () => set({ phoneNumber: null, callState: null, isMuted: false, isSpeaker: false }),
   setMuted: (isMuted) => set({ isMuted }),
   setSpeaker: (isSpeaker) => set({ isSpeaker }),
 }));
